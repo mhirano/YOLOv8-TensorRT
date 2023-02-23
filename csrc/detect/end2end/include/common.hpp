@@ -6,7 +6,8 @@
 #define DETECT_END2END_COMMON_HPP
 #include "opencv2/opencv.hpp"
 #include <sys/stat.h>
-#include <unistd.h>
+//#include <unistd.h>
+#include <filesystem>
 #include "NvInfer.h"
 
 #define CHECK(call)                                   \
@@ -99,8 +100,8 @@ inline static float clamp(float val, float min, float max)
 
 inline bool IsPathExist(const std::string& path)
 {
-	if (access(path.c_str(), 0) == F_OK)
-	{
+	if ( std::filesystem::exists(std::filesystem::status(path)))
+    {
 		return true;
 	}
 	return false;
@@ -113,8 +114,9 @@ inline bool IsFile(const std::string& path)
 		printf("%s:%d %s not exist\n", __FILE__, __LINE__, path.c_str());
 		return false;
 	}
-	struct stat buffer;
-	return (stat(path.c_str(), &buffer) == 0 && S_ISREG(buffer.st_mode));
+//	struct stat buffer;
+//	return (stat(path.c_str(), &buffer) == 0 && S_ISREG(buffer.st_mode));
+    return std::filesystem::exists(std::filesystem::status(path));
 }
 
 inline bool IsFolder(const std::string& path)
@@ -123,8 +125,9 @@ inline bool IsFolder(const std::string& path)
 	{
 		return false;
 	}
-	struct stat buffer;
-	return (stat(path.c_str(), &buffer) == 0 && S_ISDIR(buffer.st_mode));
+//	struct stat buffer;
+//	return (stat(path.c_str(), &buffer) == 0 && S_ISDIR(buffer.st_mode));
+    return std::filesystem::is_directory(std::filesystem::status(path));
 }
 
 namespace det

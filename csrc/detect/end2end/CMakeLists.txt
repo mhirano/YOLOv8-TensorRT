@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 2.8.12)
 
 set(CMAKE_CUDA_ARCHITECTURES 60 61 62 70 72 75 86)
-set(CMAKE_CUDA_COMPILER /usr/local/cuda/bin/nvcc)
+set(CMAKE_CUDA_COMPILER "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.7/bin/nvcc.exe")
 
 project(yolov8 LANGUAGES CXX CUDA)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -O3 -g")
-set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_BUILD_TYPE Release)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -O3 -g")
+set(CMAKE_CXX_STANDARD 17)
+#set(CMAKE_BUILD_TYPE Release)
 option(CUDA_USE_STATIC_CUDA_RUNTIME OFF)
 
 # CUDA
@@ -22,8 +22,8 @@ message(STATUS "OpenCV Libraries: \n${OpenCV_LIBRARIES}\n")
 message(STATUS "OpenCV Headers: \n${OpenCV_INCLUDE_DIRS}\n")
 
 # TensorRT
-set(TensorRT_INCLUDE_DIRS /usr/include/x86_64-linux-gnu)
-set(TensorRT_LIBRARIES /usr/lib/x86_64-linux-gnu)
+set(TensorRT_INCLUDE_DIRS "C:/dev/TensorRT-8.5.3.1.Windows10.x86_64.cuda-11.8.cudnn8.6/TensorRT-8.5.3.1/include")
+set(TensorRT_LIBRARIES "C:/dev/TensorRT-8.5.3.1.Windows10.x86_64.cuda-11.8.cudnn8.6/TensorRT-8.5.3.1/lib")
 
 
 message(STATUS "TensorRT Libs: \n${TensorRT_LIBRARIES}\n")
@@ -51,4 +51,5 @@ add_executable(${PROJECT_NAME}
         )
 
 target_link_directories(${PROJECT_NAME} PUBLIC ${ALL_LIBS})
-target_link_libraries(${PROJECT_NAME} PRIVATE nvinfer nvinfer_plugin cudart ${OpenCV_LIBS})
+target_link_libraries(${PROJECT_NAME} PRIVATE nvinfer nvinfer_plugin ${CUDA_LIBRARIES} ${OpenCV_LIBS})
+#target_link_libraries(${PROJECT_NAME} PRIVATE nvinfer nvinfer_plugin ${OpenCV_LIBS})

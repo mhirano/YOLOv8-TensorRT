@@ -7,6 +7,9 @@
 *.jpg
 *.png
 *.bmp
+csrc/detect/end2end/cmake-build-debug/*
+csrc/detect/end2end/cmake-build-release/*
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
